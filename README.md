@@ -188,7 +188,7 @@ This code will result in new columns shown in the right side of the table above.
 ### Result Verification
 To verify the result use `verify_result.sh`
 
-### Last Words
+## Last Words
 `csvkit` is useful for quick exploration of csv data. However, if one needs more advance data wrangling with big csv data, it is recommended to do it in SQL directly or using a proper programming language like python or R. For example the required function to locate a character from the right side of a strings above is relatively complicated due to the limitation of `SQLite`. For this reason I would not use `csvkit` in a similiar wrangling cases for my day to day tasks.   
 
 
