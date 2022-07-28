@@ -135,6 +135,11 @@ For this purpose, the last dot in the strings or the first dot from the right ne
 12      from new_cl_category
 ```
 
+- Firstly the `replace` function in 7th line removes '.' from the strings, as a result if the content of `category_code` column is 'electronics.audio.headphone', the result of this function will be 'electronicsaudioheadphone'. 
+- Secondly, the `rtrim` function in line number 5 will use the newly created strings from `replace` function above will remove all the resulting charaters from previous function from the right until the first '.'. With the same example above, its result will be 'electronics.audio.'  
+- Finally, The final `replace` function  at line number 3 will remove the sequence of strings in `category_code` that match with the result of `rtrim` function above, this way we will have the `product_name`. Using the example above, `product_name` column content will be 'headphone'.
+
+###
 
 
 
