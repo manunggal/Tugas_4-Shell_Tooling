@@ -1,6 +1,7 @@
 # Shell Tooling - 4th Task
 ## Student ID
 Username: manunggal-BvkE
+
 Name: Manunggal Sukendro
 
 ## Purpose
@@ -8,6 +9,14 @@ Using `csvkit` to clean data. In this case two ecommerce sample data need to be 
 
 ## Process
 ### Getting the Files Name
-```
+``` Sqlite
+SELECT 
+    *, 
+    substr(
+        category_code, 
+        instr(category_code, '.'), 
+        -LENGTH(category_code)
+    ) AS category 
+from filtered_data
 
 ```
