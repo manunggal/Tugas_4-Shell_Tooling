@@ -9,7 +9,7 @@ Using `csvkit` and Bash to clean data. In this case two ecommerce sample data ne
 
 ## Process
 ### Getting the Input Files
-using `read` command in bash, input files are hold as variables to be used in the following functions.
+using `read` command in bash, input files are held as variables to be used in the upcoming functions.
 ```
 #take first file
 echo "insert first file name:"
@@ -119,7 +119,7 @@ The `substr(x,y,z)` takes three arguments:
 - z: the lenght of the resulting characters to be read, in this case it is negative lenght of `category_code` since it is read from left where the first dot is, to the right direction of the strings in order to capture the product category.
 
 #### Separating Product Name
-For this purpose, the last dot in the strings or first dot from the right needs to be identified. The syntax in `SQLite` for this purpose is not as straight forward as in, let's say, 'MySQL'. Since, to the best of my knowldge, there is no function for this purpose. Hence, IMO, the query for this step is not simple:
+For this purpose, the last dot in the strings or the first dot from the right needs to be identified, in order to select the last sequence of strings from the dot. The syntax in `SQLite` for this purpose is not as straight forward as in, let's say, 'MySQL'. Since, to the best of my knowldge, there is no function to locate a character from the right. Hence, IMO, the query for this step is not simple:
 ```
 1       SELECT 
 2           *, 
@@ -134,6 +134,7 @@ For this purpose, the last dot in the strings or first dot from the right needs 
 11          ) AS product_name 
 12      from new_cl_category
 ```
+
 
 
 
