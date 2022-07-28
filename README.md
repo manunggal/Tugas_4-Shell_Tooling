@@ -97,11 +97,12 @@ The first sequence of characters prior to the first dot is product category, whe
 To separate these strings, `csvsql` function is used. if it is applied to csv file, this function use `SQLite` syntax.
 The typical syntax of this function is
 ```
-csvsql --query "_required_query FROM [csv_file-without .csv]" [csv_file.csv] > [saved_csv_file.csv]
+csvsql --query "_required_query FROM [csv_file-without '.csv']" [csv_file.csv] > [saved_csv_file.csv]
 ```
+This function will return the query result as csv file.
 
 #### Separating Product Category
-The query for this  process is:
+The query for this process is:
 ``` SQLite
 SELECT 
     *, 
@@ -112,6 +113,28 @@ SELECT
     ) AS category 
 from filtered_data
 ```
+The `substr(x,y,z)` takes three arguments:
+- x: column name, in this case it is `category_code`
+- y: first character position, in this case the first '.' from the left. `instr()` is used to locate the first '.' within the strings.
+- z: the lenght of the resulting characters to be read, in this case it is negative lenght of `category_code` since it is read from left where the first dot is, to the right direction of the strings in order to capture the product category.
+
+#### Separating Product Name
+For this purpose, the last dot in the strings or first dot from the right needs to be identified. The syntax in `SQLite` for this purpose is not as straight forward as in, let's say, 'MySQL'. Since, to the best of my knowldge, there is no function for this purpose. Hence, IMO, the query for this step is not simple:
+```
+1       SELECT 
+2           *, 
+3           replace(
+4               category_code, 
+5               rtrim(
+6                   category_code, 
+7                   replace(
+8                       category_code, '.', '')
+9               ), 
+10              ''
+11          ) AS product_name 
+12      from new_cl_category
+```
+
 
 
 
