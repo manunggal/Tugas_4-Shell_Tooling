@@ -141,16 +141,17 @@ For this purpose, the last dot in the strings or the first dot from the right ne
 
 ### Selecting relevant columns
 The last step is selecting the relevant columns for the report, they are:
-Column n+Number|Column Name
----|---|---
-  1| event_time
-  2| event_type
-  3| product_id
-  4| category_id
-  5| brand
-  6| price
-  7| category
-  8| product_name
+
+Column Number | Column Name
+--- | ---
+  1 | event_time
+  2 | event_type
+  3 | product_id
+  4 | category_id
+  5 | brand
+  6 | price
+  7 | category
+  8 | product_name
 
 For this purpose, `csvcut` function is used where the selected column numbers are in correspondence with the table above. The code for this selection is:
 ```
