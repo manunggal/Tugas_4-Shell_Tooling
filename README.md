@@ -66,7 +66,7 @@ error_status "$filtering_elements_success" "$filtering_elements_error"
 
 ```
 
-The second step verifies whether the resulting filtered data contains the keyword. If it does not, it will result in an empty rows table. The following steps do just that.
+The second step verifies whether the resulting filtered data contains the keyword. If it does not, it will result in an empty rows table. in order to do that, first `csvcut` is used to select the target column, afterwards `csvgrep` + keyword will filter the rows and pipes the result as `.txt` file. This file's content is 'Row count: XXX' strings. Secondly, the numbers part of this file will be used in `ifelse` sequence to verify the rows numbers. For this purpose variable `awk` function is used to remove the 'Row count: ' strings from the txt file.
 
 ```
 # Check filtered data, search if filter keyword exists in result, save result as txt file (result 0, no matching result)
@@ -87,6 +87,35 @@ else
         exit
 fi
 ```
+
+### Filtering 'product_category' and 'product_name' from 'category_code' Column
+The `category_code` column contains strings which are combination of product category and product name, they are separated by '.', for example: `apparel.shoes.keds`, this strings means:
+- Product category: 'apparel'
+- Product name: 'keds'
+The first sequence of characters prior to the first dot is product category, whereas the last sequence of strings after the last dot is the product name.
+
+To separate these strings, `csvsql` function is used. if it is applied to csv file, this function use `SQLite` syntax.
+The typical syntax of this function is
+```
+csvsql --query "_required_query FROM [csv_file-without .csv]" [csv_file.csv] > [saved_csv_file.csv]
+```
+
+#### Separating Product Category
+The query for this  process is:
+``` SQLite
+SELECT 
+    *, 
+    substr(
+        category_code, 
+        instr(category_code, '.'), 
+        -LENGTH(category_code)
+    ) AS category 
+from filtered_data
+```
+
+
+
+
 
 
 
