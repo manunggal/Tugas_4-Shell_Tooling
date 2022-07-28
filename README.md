@@ -119,7 +119,7 @@ The `substr(x,y,z)` takes three arguments:
 - z: the lenght of the resulting characters to be read, in this case it is negative lenght of `category_code` since it is read from left where the first dot is, to the right direction of the strings in order to capture the product category.
 
 #### Separating Product Name
-For this purpose, the last dot in the strings or the first dot from the right needs to be identified, in order to select the last sequence of strings from the dot. The syntax in `SQLite` for this purpose is not as straight forward as in, let's say, 'MySQL'. Since, to the best of my knowldge, there is no function to locate a character from the right. Hence, IMO, the query for this step is not simple:
+Similiarly for this step, `csvsql` is used. For this purpose, the last dot in the strings or the first dot from the right needs to be identified, in order to select the last sequence of strings from the dot. The syntax in `SQLite` for this purpose is not as straight forward as in, let's say, 'MySQL'. Since, to the best of my knowldge, there is no function to locate a character from the right. Hence, IMO, the query for this step is not simple:
 ```
 1       SELECT 
 2           *, 
@@ -142,18 +142,40 @@ For this purpose, the last dot in the strings or the first dot from the right ne
 ### Selecting relevant columns
 The last step is selecting the relevant columns for the report, they are:
 
-Column Number | Column Name
---- | ---
-  1 | event_time
-  2 | event_type
-  3 | product_id
-  4 | category_id
-  5 | brand
-  6 | price
-  7 | category
-  8 | product_name
+<table>
+<tr><th>Original Columns </th><th> New Columns </th></tr>
+<tr><td>
 
-For this purpose, `csvcut` function is used where the selected column numbers are in correspondence with the table above. The code for this selection is:
+|Column Numbers| Column Names|
+|--| --|
+ 1 | empty 
+  2| event_time
+  3| event_type
+  4| product_id
+  5| category_id
+  6| category_code
+  7| brand
+  8| price
+  9| user_id
+ 10| user_session
+
+</td><td>
+
+|Column Numbers| Column Names|
+|--| --|
+  1| event_time
+  2| event_type
+  3| product_id
+  4| category_id
+  5| brand
+  6| price
+  7| category
+  8| product_name
+ NA|
+ NA| 
+</td></tr> </table>
+
+For this purpose, `csvcut` function is used where the selected column numbers are in correspondence with the original columns illustrated above. The code for this selection is:
 ```
 # select relevant columns
 csvcut new_cl_productname.csv -c 2,3,4,5,7,8,11,12 > final_data.csv
@@ -161,6 +183,7 @@ csvcut new_cl_productname.csv -c 2,3,4,5,7,8,11,12 > final_data.csv
 test_exit=$?
 error_status "$selecting_success" "$selecting_error"
 ```
+This code will result in new columns shown in the right side of the table above.
 
 ### Result Verification
 To verify the result use `verify_result.sh`
