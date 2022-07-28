@@ -99,8 +99,9 @@ rm stacked_files.csv filtered_data.csv new_cl_category.csv new_cl_productname.cs
 
 # display head result
 head final_data.csv | csvlook
+# display list of columns
 csvcut -n final_data.csv
 
-
+echo "Done!"
 
 
