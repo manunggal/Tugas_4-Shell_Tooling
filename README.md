@@ -94,7 +94,7 @@ The `category_code` column contains strings which are combination of product cat
 - Product name: 'keds'
 The first sequence of characters prior to the first dot is product category, whereas the last sequence of strings after the last dot is the product name.
 
-To separate these strings, `csvsql` function is used. if it is applied to csv file, this function use `SQLite` syntax.
+To separate these strings, `csvsql` function is used. If it is applied to database, the syntax will follow which database being used, however if it is applied to csv file, this function use `SQLite` syntax.
 The typical syntax of this function is
 ```
 csvsql --query "_required_query FROM [csv_file-without '.csv']" [csv_file.csv] > [saved_csv_file.csv]
