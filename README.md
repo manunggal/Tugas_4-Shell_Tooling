@@ -139,7 +139,33 @@ For this purpose, the last dot in the strings or the first dot from the right ne
 - Secondly, the `rtrim` function in line number 5 will use the newly created strings from `replace` function above will remove all the resulting charaters from previous function from the right until the first '.'. With the same example above, its result will be 'electronics.audio.'  
 - Finally, The final `replace` function  at line number 3 will remove the sequence of strings in `category_code` that match with the result of `rtrim` function above, this way we will have the `product_name`. Using the example above, `product_name` column content will be 'headphone'.
 
-###
+### Selecting relevant columns
+The last step is selecting the relevant columns for the report, they are:
+Column n+Number|Column Name
+---|---|---
+  1| event_time
+  2| event_type
+  3| product_id
+  4| category_id
+  5| brand
+  6| price
+  7| category
+  8| product_name
+
+For this purpose, `csvcut` function is used where the selected column numbers are in correspondence with the table above. The code for this selection is:
+```
+# select relevant columns
+csvcut new_cl_productname.csv -c 2,3,4,5,7,8,11,12 > final_data.csv
+# check if select columns success
+test_exit=$?
+error_status "$selecting_success" "$selecting_error"
+```
+
+### Result Verification
+To verify the result use `verify_result.sh`
+
+### Last Words
+`csvkit` is useful for quick exploration of csv data. However, if one needs more advance data wrangling with big csv data, it is recommended to do it in SQL directly or using a proper programming language like python or R. For example the required function to locate a character from the right side of a strings above is relatively complicated due to the limitation of `SQLite`. For this reason I would not use `csvkit` in a similiar wrangling cases for my day to day tasks.   
 
 
 
